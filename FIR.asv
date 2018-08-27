@@ -1,0 +1,32 @@
+clc;
+clear all;
+close all;
+
+x=input('Enter first sequence');
+h=input('Enter second sequence');
+
+lengthx=length(x);
+lengthy=length(h);
+
+N=lengthx+lengthy-1;
+linconv=conv(h,x);
+
+for i=1:lengthx
+    z(i) = x(lengthx-i+1);
+end
+z=[zeros(1,lengthy),z];
+for i = 1:N
+    y(i) = 0;
+    a = z';
+    a = circshift(a,1);
+    z = a';
+    for j=1:lengthy
+        y(i)= y(i) + h(j) * z(j);
+    end
+end
+subplot(2,1,1)
+stem(linconv)
+title("Linconv")
+subplot(2,1,2);
+stem(y);
+title("Using FIR")
